@@ -18,7 +18,7 @@ export default function Index() {
     <View className="flex-1 items-center justify-center bg-black">
       <Animated.Image
         source={require("../assets/splash.png")}
-        entering={FadeInDown.duration(800).springify()}
+        entering={FadeInDown.duration(2000).springify()}
         resizeMode="contain"
         className="w-80 h-80"
       />
