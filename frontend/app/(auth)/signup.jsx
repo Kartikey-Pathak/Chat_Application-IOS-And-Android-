@@ -92,6 +92,12 @@ export default function signup() {
                 className="px-4 text-black"
               />
             </View>
+             <TouchableOpacity  onPress={
+                        () =>{
+                          Haptics.notificationAsync(
+                            Haptics.NotificationFeedbackType.Success
+                          );}
+                      } className="w-[80%] h-17 absolute bottom-10 flex items-center justify-center bg-white rounded-4xl"><Text className="font-bold text-2xl text-black">Get Started</Text></TouchableOpacity>
           </View>
         </LinearGradient>
       </View>
