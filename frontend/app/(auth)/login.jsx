@@ -1,9 +1,117 @@
-import { Text, View } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import {
+  ActivityIndicator,
+  ImageBackground,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
 export default function login() {
+  const router = useRouter();
+  const  [isLoading, setisLoading] = useState(false) 
+
   return (
-    <View>
-      <Text>login</Text>
-    </View>
-  )
+    <ImageBackground
+      source={require('../../assets/bgPattern.png')}
+      resizeMode="cover"
+      className="flex-1"
+    >
+      {/* Dark overlay */}
+      <View className="absolute inset-0 bg-black opacity-50" />
+
+      <TouchableOpacity
+        className="absolute top-20 left-10 z-30"
+        onPress={() => {
+          Haptics.notificationAsync(
+            Haptics.NotificationFeedbackType.Success
+          );
+          router.back();
+        }}
+      >
+        <Ionicons size={30} name="arrow-back" color="white" />
+      </TouchableOpacity>
+
+
+      <View className="flex-1 h-full w-full">
+
+        <LinearGradient
+          colors={[
+            "#020617",
+            "#0F172A",
+            "#1E3A8A",
+            "#312E81",
+            "#111827",
+          ]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{ flex: 1, display: "flex", alignContent: "center", justifyContent: "center", paddingTop: 150 }}
+          className="rounded-t-[40px] w-full h-full flex-1 pt-36 items-center"
+        >
+          {/* Header */}
+          <View className="w-full gap-5 px-8">
+            <Text className="text-white text-4xl font-extrabold">
+              Welcome Back
+            </Text>
+
+            <Text className="text-white text-xl font-medium">
+              We are happy to see you!
+            </Text>
+          </View>
+
+          {/* Form */}
+          <View className="flex-1 mt-20 w-full items-center gap-8 pb-10">
+          
+
+            {/* Email */}
+            <View className="w-[85%] h-18 bg-[#2A2A2C] rounded-4xl justify-center">
+              <TextInput
+                placeholder="Enter Email"
+                placeholderTextColor="gray"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                className="px-4 text-black"
+              />
+            </View>
+
+            {/* Password */}
+            <View className="w-[85%] h-18 bg-[#2A2A2C] rounded-4xl justify-center">
+              <TextInput
+                placeholder="Enter Password"
+                placeholderTextColor="gray"
+                secureTextEntry
+                className="px-4 text-black"
+              />
+            </View>
+            <View className="flex items-center justify-center flex-row"><Text className="text-white text-xl flex items-center justify-center text-center flex-row">Don't have an account? </Text> <TouchableOpacity onPress={
+              () => {
+                Haptics.notificationAsync(
+                  Haptics.NotificationFeedbackType.Success
+                ); router.push("/(auth)/signup")
+              }
+            }><Text className=" text-center text-yellow-400 text-xl">Signup</Text></TouchableOpacity></View>
+            {!isLoading?
+            <TouchableOpacity onPress={
+              () => {
+                Haptics.notificationAsync(
+                  Haptics.NotificationFeedbackType.Success
+                );
+                setisLoading(true);
+              }
+            } className="w-[80%] h-17 absolute bottom-10 flex items-center justify-center bg-white rounded-4xl"><Text className="font-bold text-2xl text-black">Login</Text></TouchableOpacity>
+            :
+            <ActivityIndicator size="large"/>
+            }
+          </View>
+        </LinearGradient>
+      </View>
+
+
+    </ImageBackground>
+  );
 }

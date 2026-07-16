@@ -2,7 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import {
+  ActivityIndicator,
   ImageBackground,
   Text,
   TextInput,
@@ -12,6 +14,7 @@ import {
 
 export default function signup() {
   const router = useRouter();
+  const  [isLoading, setisLoading] = useState(false) 
 
   return (
     <ImageBackground
@@ -92,12 +95,25 @@ export default function signup() {
                 className="px-4 text-black"
               />
             </View>
-             <TouchableOpacity  onPress={
-                        () =>{
-                          Haptics.notificationAsync(
-                            Haptics.NotificationFeedbackType.Success
-                          );}
-                      } className="w-[80%] h-17 absolute bottom-10 flex items-center justify-center bg-white rounded-4xl"><Text className="font-bold text-2xl text-black">Get Started</Text></TouchableOpacity>
+            <View className="flex items-center justify-center flex-row"><Text className="text-white text-xl flex items-center justify-center text-center flex-row">Already have an account? </Text> <TouchableOpacity onPress={
+              () => {
+                Haptics.notificationAsync(
+                  Haptics.NotificationFeedbackType.Success
+                ); router.push("/(auth)/login")
+              }
+            }><Text className=" text-center text-yellow-400 text-xl">Login</Text></TouchableOpacity></View>
+            {!isLoading?
+            <TouchableOpacity onPress={
+              () => {
+                Haptics.notificationAsync(
+                  Haptics.NotificationFeedbackType.Success
+                );
+                setisLoading(true);
+              }
+            } className="w-[80%] h-17 absolute bottom-10 flex items-center justify-center bg-white rounded-4xl"><Text className="font-bold text-2xl text-black">Create Account</Text></TouchableOpacity>
+            :
+            <ActivityIndicator size="large"/>
+            }
           </View>
         </LinearGradient>
       </View>
