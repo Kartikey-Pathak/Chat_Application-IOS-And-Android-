@@ -1,30 +1,32 @@
-import { Ionicons } from '@expo/vector-icons';
-import * as Haptics from 'expo-haptics';
+import { Ionicons } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useRouter } from "expo-router";
+import { useState } from "react";
 import {
   ActivityIndicator,
   ImageBackground,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View
-} from 'react-native';
+  View,
+} from "react-native";
 
-export default function signup() {
+export default function Signup() {
   const router = useRouter();
-  const  [isLoading, setisLoading] = useState(false) 
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <ImageBackground
-      source={require('../../assets/bgPattern.png')}
+      source={require("../../assets/bgPattern.png")}
       resizeMode="cover"
       className="flex-1"
     >
-      {/* Dark overlay */}
-      <View className="absolute inset-0 bg-black opacity-50" />
+      {/* Dark Overlay */}
+      <View className="absolute inset-0 bg-black/50" />
 
+      {/* Back Button */}
       <TouchableOpacity
         className="absolute top-20 left-10 z-30"
         onPress={() => {
@@ -34,12 +36,18 @@ export default function signup() {
           router.back();
         }}
       >
-        <Ionicons size={30} name="arrow-back" color="white" />
+        <Ionicons name="arrow-back" size={30} color="white" />
       </TouchableOpacity>
 
-
-      <View className="flex-1 h-full w-full">
-
+      <ScrollView
+        className="flex-1"
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
+        keyboardShouldPersistTaps="handled"
+        automaticallyAdjustKeyboardInsets
+        showsVerticalScrollIndicator={false}
+      >
         <LinearGradient
           colors={[
             "#020617",
@@ -50,75 +58,93 @@ export default function signup() {
           ]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={{ flex: 1, display: "flex", alignContent: "center", justifyContent: "center", paddingTop: 150 }}
-          className="rounded-t-[40px] w-full h-full flex-1 pt-36 items-center"
+          style={{
+            flex: 1,
+            minHeight: "100%",
+            paddingTop: 150,
+            alignItems: "center",
+          }}
+          className="rounded-t-[40px]"
         >
           {/* Header */}
-          <View className="w-full gap-5 px-8">
+          <View className="w-full px-8">
             <Text className="text-white text-4xl font-extrabold">
               Getting Started
             </Text>
 
-            <Text className="text-white text-xl font-medium">
+            <Text className="text-white text-xl font-medium mt-4">
               Create an account to continue
             </Text>
           </View>
 
           {/* Form */}
-          <View className="flex-1 mt-20 w-full items-center gap-8 pb-10">
-            {/* Name */}
-            <View className="w-[85%] h-18 bg-[#2A2A2C] rounded-4xl justify-center">
+          <View className="w-full items-center gap-6 mt-16 pb-12">
+            <View className="w-[85%] h-16 bg-[#2A2A2C] rounded-3xl justify-center">
               <TextInput
                 placeholder="Enter Name"
                 placeholderTextColor="gray"
-                className="px-4 text-black"
+                className="px-5 text-white"
               />
             </View>
 
-            {/* Email */}
-            <View className="w-[85%] h-18 bg-[#2A2A2C] rounded-4xl justify-center">
+            <View className="w-[85%] h-16 bg-[#2A2A2C] rounded-3xl justify-center">
               <TextInput
                 placeholder="Enter Email"
                 placeholderTextColor="gray"
                 keyboardType="email-address"
                 autoCapitalize="none"
-                className="px-4 text-black"
+                className="px-5 text-white"
               />
             </View>
 
-            {/* Password */}
-            <View className="w-[85%] h-18 bg-[#2A2A2C] rounded-4xl justify-center">
+            <View className="w-[85%] h-16 bg-[#2A2A2C] rounded-3xl justify-center">
               <TextInput
                 placeholder="Enter Password"
                 placeholderTextColor="gray"
                 secureTextEntry
-                className="px-4 text-black"
+                className="px-5 text-white"
               />
             </View>
-            <View className="flex items-center justify-center flex-row"><Text className="text-white text-xl flex items-center justify-center text-center flex-row">Already have an account? </Text> <TouchableOpacity onPress={
-              () => {
-                Haptics.notificationAsync(
-                  Haptics.NotificationFeedbackType.Success
-                ); router.push("/(auth)/login")
-              }
-            }><Text className=" text-center text-yellow-400 text-xl">Login</Text></TouchableOpacity></View>
-            {!isLoading?
-            <TouchableOpacity onPress={
-              () => {
-                Haptics.notificationAsync(
-                  Haptics.NotificationFeedbackType.Success
-                );
-                setisLoading(true);
-              }
-            } className="w-[80%] h-17 absolute bottom-10 flex items-center justify-center bg-white rounded-4xl"><Text className="font-bold text-2xl text-black">Create Account</Text></TouchableOpacity>
-            :
-            <ActivityIndicator size="large"/>
-            }
+
+            <View className="flex-row items-center">
+              <Text className="text-white text-lg">
+                Already have an account?
+              </Text>
+
+              <TouchableOpacity
+                onPress={() => {
+                  Haptics.notificationAsync(
+                    Haptics.NotificationFeedbackType.Success
+                  );
+                  router.push("/(auth)/login");
+                }}
+              >
+                <Text className="text-yellow-400 text-lg font-semibold ml-2">
+                  Login
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {!isLoading ? (
+              <TouchableOpacity
+                onPress={() => {
+                  Haptics.notificationAsync(
+                    Haptics.NotificationFeedbackType.Success
+                  );
+                  setIsLoading(true);
+                }}
+                className="w-[80%] h-16 bg-white rounded-3xl items-center justify-center mt-8"
+              >
+                <Text className="text-black text-2xl font-bold">
+                  Create Account
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <ActivityIndicator size="large" color="white" />
+            )}
           </View>
         </LinearGradient>
-      </View>
-
-
+      </ScrollView>
     </ImageBackground>
   );
 }
