@@ -69,17 +69,17 @@ export default function Signup() {
           {/* Header */}
           <View className="w-full px-8">
             <Text className="text-white text-4xl font-extrabold">
-              Getting Started
+              Welcome back
             </Text>
 
             <Text className="text-white text-xl font-medium mt-4">
-              Create an account to continue
+              We are happy to see you!
             </Text>
           </View>
 
           {/* Form */}
           <View className="w-full items-center gap-6 mt-16 pb-12">
-           
+
 
             <View className="w-[85%] h-16 bg-[#2A2A2C] rounded-3xl justify-center">
               <TextInput
@@ -130,7 +130,7 @@ export default function Signup() {
                 className="w-[80%] h-16 bg-white rounded-3xl items-center justify-center mt-8"
               >
                 <Text className="text-black text-2xl font-bold">
-                  Login 
+                  Login
                 </Text>
               </TouchableOpacity>
             ) : (
